@@ -1,0 +1,24 @@
+doctype html
+html
+  head
+    title
+      | VueApp
+    meta[name="viewport" content="width=device-width,initial-scale=1"]
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag 'application', media: 'all'
+    = javascript_pack_tag 'application'
+  body
+    .nav
+      .logo
+      - flash.each do |type, msg|
+        .alert.alert-info
+          = msg
+      .user_nav
+        - if current_user.present?
+          = "Hello #{current_user.email}"
+          = link_to 'LogOut', log_out_path 
+        - else
+          = link_to 'Login', log_in_path
+          = link_to 'SingUp', sign_up_path
+    = yield
